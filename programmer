@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dasturchi Bo'lish — 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050508;
+  --surface: #0d0d14;
+  --surface2: #13131e;
+  --border: #1e1e30;
+  --border2: #2a2a40;
+  --text: #eeeef8;
+  --dim: #7777a0;
+  --muted: #3a3a58;
+  --c: #00f0ff;
+  --c2: #8b5cf6;
+  --c3: #f97316;
+  --c4: #22d3ee;
+  --c5: #4ade80;
+  --c6: #f43f5e;
+  --frontend: #38bdf8;
+  --backend: #a78bfa;
+  --devops: #fb923c;
+  --cyber: #f472b6;
+  --ai: #34d399;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Unbounded', sans-serif;
+  --body: 'Sora', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--body); }
+
+/* SLIDE ENGINE */
+#deck {
+  width:100vw; height:100vh;
+  position:relative; overflow:hidden;
+}
+
+.slide {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:4rem 3rem;
+  opacity:0;
+  transform:translateX(100vw);
+  transition:transform 0.65s cubic-bezier(.77,0,.175,1), opacity 0.4s ease;
+  pointer-events:none;
+  overflow:hidden;
+}
+.slide.active {
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:all;
+}
+.slide.prev {
+  opacity:0;
+  transform:translateX(-100vw);
+}
+
+/* SHARED BG GRID */
+.slide::before {
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(30,30,48,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,30,48,0.5) 1px, transparent 1px);
+  background-size:50px 50px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 80%);
+  pointer-events:none;
+}
+
+/* NAV */
+#nav {
+  position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+  z-index:200;
+  display:flex; align-items:center; gap:1rem;
+  background:rgba(13,13,20,0.9);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border2);
+  border-radius:100px;
+  padding:0.6rem 1.2rem;
+}
+.nav-btn {
+  width:36px; height:36px;
+  border-radius:50%;
+  border:1px solid var(--border2);
+  background:transparent;
+  color:var(--dim);
+  font-size:1rem;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.nav-btn:hover { border-color:var(--c); color:var(--c); }
+.nav-btn:disabled { opacity:0.2; cursor:default; }
+
+#dots { display:flex; gap:6px; align-items:center; }
+.dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--muted);
+  transition:all 0.3s;
+  cursor:pointer;
+}
+.dot.active { background:var(--c); width:20px; border-radius:3px; }
+
+#slideNum {
+  font-family:var(--mono); font-size:0.6rem;
+  color:var(--dim); letter-spacing:0.1em;
+  min-width:40px; text-align:center;
+}
+
+/* KEY HINT */
+#keyHint {
+  position:fixed; top:1.5rem; right:1.5rem;
+  z-index:200;
+  font-family:var(--mono); font-size:0.58rem;
+  color:var(--muted);
+  display:flex; align-items:center; gap:0.4rem;
+}
+.kbd {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:18px;
+  border:1px solid var(--muted);
+  border-radius:3px;
+  font-size:0.5rem;
+}
+
+/* PROGRESS BAR */
+#progressBar {
+  position:fixed; top:0; left:0; right:0; z-index:300;
+  height:2px; background:var(--border);
+}
+#progressFill {
+  height:100%;
+  background:linear-gradient(90deg, var(--c), var(--c2));
+  transition:width 0.4s ease;
+}
+
+/* SLIDE LOGO */
+.slide-logo {
+  position:absolute; top:1.5rem; left:2rem;
+  font-family:var(--display); font-size:0.6rem;
+  color:var(--muted); letter-spacing:0.15em;
+}
+
+/* ===========================
+   SLIDE STYLES
+   =========================== */
+
+/* SECTION TAG */
+.stag {
+  font-family:var(--mono); font-size:0.6rem;
+  color:var(--c); letter-spacing:0.2em; text-transform:uppercase;
+  display:flex; align-items:center; gap:0.5rem;
+  margin-bottom:1rem;
+}
+.stag::before { content:''; width:20px; height:1px; background:var(--c); }
+
+/* HERO — slide 0 */
+#s0 {
+  background:
+    radial-gradient(ellipse 70% 60% at 30% 20%, rgba(0,240,255,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(139,92,246,0.09) 0%, transparent 50%);
+}
+.hero-title {
+  font-family:var(--display);
+  font-size:clamp(2.8rem, 6vw, 5.5rem);
+  font-weight:900;
+  line-height:1.08;
+  letter-spacing:-0.03em;
+  text-align:center;
+  margin-bottom:1.5rem;
+}
+.hero-title .hl {
+  background:linear-gradient(120deg, var(--c), var(--c2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero-sub { font-size:0.95rem; color:var(--dim); text-align:center; max-width:520px; line-height:1.7; }
+.hero-chips { display:flex; gap:0.5rem; justify-content:center; margin-top:2rem; flex-wrap:wrap; }
+.chip {
+  font-family:var(--mono); font-size:0.6rem;
+  padding:0.35rem 0.8rem; border-radius:100px;
+  border:1px solid; letter-spacing:0.05em;
+}
+.chip.fe { color:var(--frontend); border-color:rgba(56,189,248,0.3); background:rgba(56,189,248,0.06); }
+.chip.be { color:var(--backend); border-color:rgba(167,139,250,0.3); background:rgba(167,139,250,0.06); }
+.chip.do { color:var(--devops); border-color:rgba(251,146,60,0.3); background:rgba(251,146,60,0.06); }
+.chip.cy { color:var(--cyber); border-color:rgba(244,114,182,0.3); background:rgba(244,114,182,0.06); }
+.chip.ai { color:var(--ai); border-color:rgba(52,211,153,0.3); background:rgba(52,211,153,0.06); }
+
+.hero-stats-row {
+  display:flex; gap:1px; margin-top:3rem;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:16px; overflow:hidden;
+}
+.hstat { background:var(--surface); padding:1.2rem 2rem; text-align:center; flex:1; }
+.hstat .n { font-family:var(--display); font-size:2rem; font-weight:900; color:var(--c); }
+.hstat .l { font-family:var(--mono); font-size:0.6rem; color:var(--dim); margin-top:0.25rem; }
+
+/* KIM DASTURCHI — slide 1 */
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; width:100%; max-width:1100px; }
+.myth-r {
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:14px; padding:1.4rem; position:relative; overflow:hidden;
+}
+.myth-r::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+.myth-r.bad::before { background:var(--c6); }
+.myth-r.good::before { background:var(--ai); }
+.myth-r .mt { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.6rem; }
+.myth-r.bad .mt { color:var(--c6); }
+.myth-r.good .mt { color:var(--ai); }
+.myth-r h3 { font-family:var(--display); font-size:0.78rem; font-weight:700; margin-bottom:0.5rem; line-height:1.4; }
+.myth-r p { font-size:0.75rem; color:var(--dim); line-height:1.6; }
+
+/* SOHALAR — slides 2-6 */
+.track-hero {
+  width:100%; max-width:1100px;
+  display:grid; grid-template-columns:1fr 1.6fr; gap:2.5rem;
+  align-items:start;
+}
+.track-left h2 { font-family:var(--display); font-size:clamp(1.6rem,3vw,2.6rem); font-weight:900; line-height:1.15; margin-bottom:1rem; }
+.track-left .tdesc { font-size:0.82rem; color:var(--dim); line-height:1.7; margin-bottom:1.2rem; }
+.track-salary {
+  font-family:var(--mono); font-size:0.7rem;
+  padding:0.5rem 1rem; border-radius:8px; display:inline-block;
+  margin-bottom:1.2rem;
+}
+.track-tools { display:flex; gap:0.4rem; flex-wrap:wrap; }
+.tool-tag {
+  font-family:var(--mono); font-size:0.58rem;
+  padding:0.25rem 0.6rem; border-radius:4px;
+  background:var(--surface2); border:1px solid var(--border2);
+  color:var(--dim);
+}
+
+.track-right {}
+.day-example {
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:14px; padding:1.4rem; margin-bottom:1rem;
+}
+.day-example h4 { font-family:var(--mono); font-size:0.6rem; color:var(--dim); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.75rem; }
+.task-list { list-style:none; }
+.task-list li {
+  font-size:0.78rem; color:var(--dim);
+  padding:0.4rem 0; border-bottom:1px solid rgba(255,255,255,0.04);
+  display:flex; align-items:flex-start; gap:0.6rem;
+}
+.task-list li:last-child { border-bottom:none; }
+.task-list li .ti { font-family:var(--mono); font-size:0.6rem; min-width:40px; color:var(--muted); }
+.task-list li .tc { flex:1; }
+.task-list li .tag { font-family:var(--mono); font-size:0.52rem; padding:0.1rem 0.4rem; border-radius:3px; }
+
+.code-block {
+  background:var(--bg); border:1px solid var(--border2);
+  border-radius:10px; padding:1rem 1.2rem;
+  font-family:var(--mono); font-size:0.68rem;
+  line-height:1.8; overflow:hidden;
+}
+.code-block .cb-top { display:flex; gap:5px; margin-bottom:0.75rem; }
+.code-block .cb-top span { width:10px; height:10px; border-radius:50%; }
+.code-block .cb-top .r { background:#ff5f56; }
+.code-block .cb-top .y { background:#ffbd2e; }
+.code-block .cb-top .g { background:#27c93f; }
+.code-kw { color:#c792ea; }
+.code-fn { color:#82aaff; }
+.code-str { color:#c3e88d; }
+.code-cm { color:#546e7a; }
+.code-var { color:#f78c6c; }
+.code-num { color:#f78c6c; }
+
+/* PATH SLIDE */
+.path-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; width:100%; max-width:1100px; }
+.path-step {
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:14px; padding:1.4rem; position:relative; overflow:hidden;
+}
+.path-step::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+}
+.path-step .ps-num {
+  font-family:var(--display); font-size:4rem; font-weight:900;
+  opacity:0.05; position:absolute; top:0; right:0.75rem; line-height:1;
+}
+.path-step .ps-phase { font-family:var(--mono); font-size:0.55rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.4rem; }
+.path-step h3 { font-family:var(--display); font-size:0.78rem; font-weight:700; margin-bottom:0.5rem; }
+.path-step .ps-dur { font-family:var(--mono); font-size:0.6rem; padding:0.2rem 0.5rem; border-radius:4px; display:inline-block; margin-bottom:0.75rem; }
+.path-step ul { list-style:none; }
+.path-step ul li { font-size:0.72rem; color:var(--dim); padding:0.22rem 0; border-bottom:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; gap:0.4rem; }
+.path-step ul li:last-child { border-bottom:none; }
+.path-step ul li::before { content:'▸'; font-size:0.45rem; opacity:0.4; }
+
+/* SOFT SKILLS */
+.soft-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; width:100%; max-width:1100px; }
+.sc {
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:14px; padding:1.4rem; position:relative; overflow:hidden;
+}
+.sc::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+.sc .si { font-size:1.8rem; margin-bottom:0.6rem; }
+.sc h3 { font-family:var(--display); font-size:0.8rem; font-weight:700; margin-bottom:0.4rem; }
+.sc p { font-size:0.73rem; color:var(--dim); line-height:1.6; }
+.sc .ex { margin-top:0.6rem; font-size:0.68rem; font-family:var(--mono); color:var(--muted); padding:0.5rem 0.7rem; background:var(--bg); border-radius:6px; line-height:1.5; }
+
+/* QUIZ */
+.quiz-wrap { width:100%; max-width:720px; }
+.qcard { background:var(--surface); border:1px solid var(--border2); border-radius:20px; padding:2.5rem; }
+.qprog { display:flex; gap:4px; margin-bottom:1.5rem; }
+.qprog .pd { flex:1; height:3px; border-radius:100px; background:var(--border); transition:background 0.3s; }
+.qprog .pd.done { background:var(--c); }
+.qnum { font-family:var(--mono); font-size:0.6rem; color:var(--muted); margin-bottom:0.4rem; }
+.qtext { font-family:var(--display); font-size:1.1rem; font-weight:600; margin-bottom:1.5rem; line-height:1.4; }
+.qopts { display:flex; flex-direction:column; gap:0.6rem; }
+.qopt {
+  display:flex; align-items:center; gap:0.75rem;
+  background:var(--bg); border:1px solid var(--border2);
+  border-radius:10px; padding:0.85rem 1.1rem;
+  cursor:pointer; transition:all 0.2s; font-size:0.8rem; color:var(--dim);
+}
+.qopt:hover { border-color:var(--c); color:var(--text); }
+.qopt.sel { border-color:var(--c); background:rgba(0,240,255,0.06); color:var(--text); }
+.qoptkey { font-family:var(--mono); font-size:0.58rem; color:var(--muted); min-width:16px; }
+.qnav { display:flex; justify-content:space-between; margin-top:1.5rem; }
+.qbtn {
+  font-family:var(--mono); font-size:0.7rem;
+  padding:0.6rem 1.3rem; border-radius:8px;
+  border:1px solid var(--border2); background:transparent;
+  color:var(--dim); cursor:pointer; transition:all 0.2s;
+}
+.qbtn:hover { border-color:var(--c); color:var(--c); }
+.qbtn.p { background:var(--c); border-color:var(--c); color:var(--bg); }
+.qres { display:none; text-align:center; }
+.qres .ri { font-size:3.5rem; margin-bottom:0.75rem; }
+.qres .rt { font-family:var(--display); font-size:1.4rem; font-weight:700; margin-bottom:0.5rem; }
+.qres .rd { font-size:0.8rem; color:var(--dim); line-height:1.6; max-width:480px; margin:0 auto 1.5rem; }
+.rtags { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; }
+.rtag { font-family:var(--mono); font-size:0.6rem; padding:0.3rem 0.75rem; border-radius:100px; border:1px solid currentColor; }
+
+/* TAYYOR SLIDE */
+.tayyor-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; width:100%; max-width:1000px; }
+.tg {
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:16px; padding:1.8rem;
+}
+.tg.bad { border-color:rgba(244,63,94,0.25); }
+.tg.good { border-color:rgba(74,222,128,0.25); }
+.tg-title { font-family:var(--display); font-size:0.82rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:0.4rem; }
+.tg.bad .tg-title { color:var(--c6); }
+.tg.good .tg-title { color:var(--ai); }
+.tgi { display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.76rem; color:var(--dim); line-height:1.5; }
+.tgi:last-child { border-bottom:none; }
+
+/* MARKET STATS */
+.mstats { display:flex; gap:1rem; width:100%; max-width:1100px; margin-top:1.5rem; }
+.ms { background:var(--surface); border:1px solid var(--border2); border-radius:12px; padding:1.2rem 1.5rem; text-align:center; flex:1; }
+.ms .mn { font-family:var(--display); font-size:1.8rem; font-weight:900; }
+.ms .ml { font-size:0.68rem; color:var(--dim); margin-top:0.25rem; line-height:1.4; }
+
+/* SALARY BARS */
+.sal-bars { width:100%; }
+.sal-row { display:grid; grid-template-columns:70px 1fr 100px; align-items:center; gap:1rem; margin-bottom:0.75rem; }
+.sal-lv { font-family:var(--mono); font-size:0.6rem; color:var(--dim); text-align:right; }
+.bar-t { background:var(--bg); border-radius:100px; height:7px; overflow:hidden; }
+.bar-f { height:100%; border-radius:100px; }
+.sal-am { font-family:var(--mono); font-size:0.62rem; color:var(--ai); }
+
+/* ENDING SLIDE */
+#s_end { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,240,255,0.1), transparent 60%); }
+.end-big { font-family:var(--display); font-size:clamp(2rem,5vw,4.5rem); font-weight:900; text-align:center; line-height:1.1; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+.end-sub { font-size:0.9rem; color:var(--dim); text-align:center; max-width:480px; line-height:1.7; margin-bottom:2rem; }
+.end-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:700px; }
+.eg { background:var(--surface); border:1px solid var(--border2); border-radius:12px; padding:1.2rem; text-align:center; }
+.eg .en { font-family:var(--display); font-size:1.8rem; font-weight:900; }
+.eg .el { font-size:0.68rem; color:var(--dim); margin-top:0.25rem; line-height:1.4; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.slide.active > * { animation: fadeUp 0.5s ease forwards; }
+.slide.active > *:nth-child(1) { animation-delay:0.05s; opacity:0; }
+.slide.active > *:nth-child(2) { animation-delay:0.15s; opacity:0; }
+.slide.active > *:nth-child(3) { animation-delay:0.25s; opacity:0; }
+.slide.active > *:nth-child(4) { animation-delay:0.35s; opacity:0; }
+.slide.active > *:nth-child(5) { animation-delay:0.45s; opacity:0; }
+
+/* Touch areas */
+#tapLeft, #tapRight {
+  position:fixed; top:0; bottom:0; width:15%; z-index:50;
+  cursor:pointer;
+}
+#tapLeft { left:0; }
+#tapRight { right:0; }
+</style>
+</head>
+<body>
+
+<div id="progressBar"><div id="progressFill"></div></div>
+
+<div id="keyHint">
+  <span class="kbd">◀</span>
+  <span class="kbd">▶</span>
+  KLAVISHLAR / SURING
+</div>
+
+<div id="deck">
+
+<!-- ============================================================
+     SLIDE 0 — HERO
+     ============================================================ -->
+<div class="slide active" id="s0">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">O'zbekiston IT</div>
+  <h1 class="hero-title">
+    Dasturchi bo'lish<br>
+    <span class="hl">— Haqiqat qanday?</span>
+  </h1>
+  <p class="hero-sub">Junior darajasiga chiqguncha nima kerak, qaysi yo'lni tanlamoq kerak — hamma savolga aniq, to'g'ridan-to'g'ri javob.</p>
+  <div class="hero-chips">
+    <span class="chip fe">🎨 Frontend</span>
+    <span class="chip be">⚙️ Backend</span>
+    <span class="chip do">🚀 DevOps</span>
+    <span class="chip cy">🔐 Cybersecurity</span>
+    <span class="chip ai">🤖 AI/ML</span>
+  </div>
+  <div class="hero-stats-row">
+    <div class="hstat"><div class="n">3×</div><div class="l">IT bozori o'sishi<br>2020–2025</div></div>
+    <div class="hstat"><div class="n">$800+</div><div class="l">Junior o'rtacha<br>maosh ($/oy)</div></div>
+    <div class="hstat"><div class="n">18 oy</div><div class="l">Junior bo'lish<br>o'rtacha vaqt</div></div>
+    <div class="hstat"><div class="n">40K+</div><div class="l">O'zbek IT<br>mutaxassislar</div></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 1 — KIM DASTURCHI
+     ============================================================ -->
+<div class="slide" id="s1">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">01 — Haqiqat</div>
+  <h2 style="font-family:var(--display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:1.5rem;letter-spacing:-0.02em;">Dasturchi haqida miflar vs haqiqat</h2>
+  <div class="two-col">
+    <div>
+      <div class="myth-r bad" style="margin-bottom:1rem;">
+        <div class="mt">✗ Mif</div>
+        <h3>"Matematik dahosi bo'lmasam bo'lmaydi"</h3>
+        <p>Kundalik ish 95% mantiq, muammo yechish va kod yozish. Chuqur matematika faqat AI/Graphics sohasida kerak.</p>
+      </div>
+      <div class="myth-r bad" style="margin-bottom:1rem;">
+        <div class="mt">✗ Mif</div>
+        <h3>"3 oyda junior bo'lsa bo'ladi"</h3>
+        <p>Reklama shunday deydi. Haqiqatda ish topishga tayyor Junior — 12–24 oy intensiv o'qish natijasi.</p>
+      </div>
+      <div class="myth-r bad">
+        <div class="mt">✗ Mif</div>
+        <h3>"Diplom bo'lmasa olmaydi"</h3>
+        <p>Uzum, autsorsing kompaniyalar birinchi navbatda GitHub portfolio va texnik intervyuga qaraydi.</p>
+      </div>
+    </div>
+    <div>
+      <div class="myth-r good" style="margin-bottom:1rem;">
+        <div class="mt">✓ Haqiqat</div>
+        <h3>Dasturchi = Muammo yechuvchi</h3>
+        <p>Sabr, mantiqiy fikrlash va o'rganishga ishtiyoq — bu texnik bilimdan ko'ra muhimroq. Matematik iqtidor emas, sistematik yondashuv kerak.</p>
+      </div>
+      <div class="myth-r good" style="margin-bottom:1rem;">
+        <div class="mt">✓ Haqiqat</div>
+        <h3>Portfolio diplom o'rnini bosadi</h3>
+        <p>GitHub'dagi 3–5 ta yaxshi loyiha, texnik intervyudan o'tish qobiliyati + ingliz tili B2+ — bu haqiqiy kapital.</p>
+      </div>
+      <div class="myth-r good">
+        <div class="mt">✓ Haqiqat</div>
+        <h3>IT — jamoa sporti</h3>
+        <p>Kod yozish vaqtning 40–50%. Qolgan vaqt — muloqot, code review, planning, hujjatlar. Kommunikatsiya hal qiluvchi.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 2 — FRONTEND
+     ============================================================ -->
+<div class="slide" id="s2">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag" style="color:var(--frontend)">02 — Frontend Developer</div>
+  <div class="track-hero">
+    <div class="track-left">
+      <h2 style="color:var(--frontend)">🎨 Frontend<br>Developer</h2>
+      <p class="tdesc">Veb sahifalar va dasturlarning foydalanuvchi ko'radigan qismini yaratadi. UI, animatsiyalar, form, tugmalar — barchasi frontend dasturichisi qo'lida.</p>
+      <div class="track-salary" style="color:var(--frontend);background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);">Junior: $500–900 / Middle: $1000–2000 / Senior: $3000+</div>
+      <div style="margin-bottom:0.75rem;">
+        <div class="stag" style="color:var(--dim);font-size:0.55rem;margin-bottom:0.5rem;">Asosiy texnologiyalar</div>
+        <div class="track-tools">
+          <span class="tool-tag" style="color:var(--frontend)">HTML5</span>
+          <span class="tool-tag" style="color:var(--frontend)">CSS3</span>
+          <span class="tool-tag" style="color:var(--frontend)">JavaScript</span>
+          <span class="tool-tag" style="color:var(--frontend)">React</span>
+          <span class="tool-tag" style="color:var(--frontend)">TypeScript</span>
+          <span class="tool-tag">Figma</span>
+          <span class="tool-tag">Git</span>
+          <span class="tool-tag">REST API</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="cb-top"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<span class="code-cm">// Frontend dasturchi vazifasi</span><br>
+<span class="code-kw">const</span> <span class="code-var">Button</span> = ({ <span class="code-var">onClick</span>, <span class="code-var">label</span> }) => {<br>
+&nbsp;&nbsp;<span class="code-kw">const</span> [<span class="code-var">loading</span>, <span class="code-var">setLoading</span>] = <span class="code-fn">useState</span>(<span class="code-kw">false</span>);<br>
+&nbsp;&nbsp;<span class="code-kw">return</span> &lt;<span class="code-fn">button</span> <span class="code-var">onClick</span>={<span class="code-var">onClick</span>}&gt;{<span class="code-var">label</span>}&lt;/<span class="code-fn">button</span>&gt;<br>
+}
+      </div>
+    </div>
+    <div class="track-right">
+      <div class="day-example">
+        <h4>⏰ Frontend dasturchi — kundalik ish</h4>
+        <ul class="task-list">
+          <li><span class="ti">09:00</span><span class="tc">Standup — bugungi vazifalar muhokamasi</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">jamoa</span></li>
+          <li><span class="ti">09:30</span><span class="tc">Dizayner bergan Figma faylini React komponentga aylantirish</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">kod</span></li>
+          <li><span class="ti">11:30</span><span class="tc">Backend API ga ulanish, xatolarni to'g'rilash (CORS, auth)</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">debug</span></li>
+          <li><span class="ti">13:00</span><span class="tc">Tushlik + ingliz tili — texnik maqola o'qish</span><span class="tag" style="background:rgba(255,255,255,0.05);color:var(--dim)">shaxsiy</span></li>
+          <li><span class="ti">14:00</span><span class="tc">Mobil adaptiv ko'rinish (responsive) qilish</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">kod</span></li>
+          <li><span class="ti">15:30</span><span class="tc">Code review — hamkasbning kodini ko'rib, izoh qoldirish</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">review</span></li>
+          <li><span class="ti">16:30</span><span class="tc">Performance optimallashtirish — rasmlar, lazy loading</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">optim</span></li>
+          <li><span class="ti">18:00</span><span class="tc">Pull request ochish va hujjat yozish</span><span class="tag" style="background:rgba(56,189,248,0.1);color:var(--frontend)">PR</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">O'zbekistondagi talab</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--frontend)">Yuqori</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Uzum, Click, Payme, startaplar</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Junior bo'lish vaqti</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--frontend)">12–18 oy</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Intensiv o'qishda</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 3 — BACKEND
+     ============================================================ -->
+<div class="slide" id="s3">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag" style="color:var(--backend)">03 — Backend Developer</div>
+  <div class="track-hero">
+    <div class="track-left">
+      <h2 style="color:var(--backend)">⚙️ Backend<br>Developer</h2>
+      <p class="tdesc">Server tomoni — ma'lumotlar bazasi, API, biznes mantiq. Foydalanuvchi ko'rmaydigan, lekin hamma narsani boshqaradigan qatlam. Tizimli fikrlovchilar uchun ideal.</p>
+      <div class="track-salary" style="color:var(--backend);background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);">Junior: $600–1000 / Middle: $1200–2500 / Senior: $3500+</div>
+      <div style="margin-bottom:0.75rem;">
+        <div class="track-tools">
+          <span class="tool-tag" style="color:var(--backend)">Python</span>
+          <span class="tool-tag" style="color:var(--backend)">Django/FastAPI</span>
+          <span class="tool-tag" style="color:var(--backend)">PostgreSQL</span>
+          <span class="tool-tag" style="color:var(--backend)">Redis</span>
+          <span class="tool-tag" style="color:var(--backend)">Docker</span>
+          <span class="tool-tag">JWT</span>
+          <span class="tool-tag">REST/GraphQL</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="cb-top"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<span class="code-cm"># Backend: API endpoint misoli</span><br>
+<span class="code-kw">@app</span>.get(<span class="code-str">"/users/{id}"</span>)<br>
+<span class="code-kw">async def</span> <span class="code-fn">get_user</span>(<span class="code-var">id</span>: <span class="code-var">int</span>, <span class="code-var">db</span>: <span class="code-var">Session</span>):<br>
+&nbsp;&nbsp;<span class="code-var">user</span> = <span class="code-var">db</span>.query(<span class="code-var">User</span>).filter(<span class="code-var">id</span>=<span class="code-var">id</span>).first()<br>
+&nbsp;&nbsp;<span class="code-kw">if not</span> <span class="code-var">user</span>: <span class="code-kw">raise</span> <span class="code-fn">HTTPException</span>(<span class="code-num">404</span>)<br>
+&nbsp;&nbsp;<span class="code-kw">return</span> <span class="code-var">user</span>
+      </div>
+    </div>
+    <div class="track-right">
+      <div class="day-example">
+        <h4>⏰ Backend dasturchi — kundalik ish</h4>
+        <ul class="task-list">
+          <li><span class="ti">09:00</span><span class="tc">Standup — kecha bajarilgan, bugun reja, blokerlar</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">jamoa</span></li>
+          <li><span class="ti">09:30</span><span class="tc">Yangi API endpoint yozish — foydalanuvchi profili yangilash</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">kod</span></li>
+          <li><span class="ti">11:00</span><span class="tc">Ma'lumotlar bazasi migratsiya — yangi jadval qo'shish</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">DB</span></li>
+          <li><span class="ti">12:00</span><span class="tc">Swagger hujjati to'ldirish — frontend uchun API docs</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">docs</span></li>
+          <li><span class="ti">14:00</span><span class="tc">N+1 query muammosini optimallashtirish — select_related</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">optim</span></li>
+          <li><span class="ti">15:30</span><span class="tc">Redis cache qo'shish — tez-tez so'raladigan ma'lumotlar</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">perf</span></li>
+          <li><span class="ti">16:30</span><span class="tc">Unit test yozish — yangi endpointni tekshirish</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">test</span></li>
+          <li><span class="ti">17:30</span><span class="tc">Frontend bilan integratsiya sinovi, PR ochish</span><span class="tag" style="background:rgba(167,139,250,0.1);color:var(--backend)">integ</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Eng mashhur til (O'zb)</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--backend)">Python</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Django, FastAPI — top talab</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Remote imkoniyat</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--backend)">Katta</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Xorijiy autsorsing uchun ideal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 4 — DEVOPS
+     ============================================================ -->
+<div class="slide" id="s4">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag" style="color:var(--devops)">04 — DevOps Engineer</div>
+  <div class="track-hero">
+    <div class="track-left">
+      <h2 style="color:var(--devops)">🚀 DevOps<br>Engineer</h2>
+      <p class="tdesc">Dasturiy ta'minotni avtomatik holda yaratish, test qilish va deploy qilish jarayonlarini boshqaradi. Bulut, Docker, Kubernetes — bu soha katta maosh beradi.</p>
+      <div class="track-salary" style="color:var(--devops);background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);">Junior: $800–1200 / Middle: $1500–3000 / Senior: $5000+</div>
+      <div style="margin-bottom:0.75rem;">
+        <div class="track-tools">
+          <span class="tool-tag" style="color:var(--devops)">Docker</span>
+          <span class="tool-tag" style="color:var(--devops)">Kubernetes</span>
+          <span class="tool-tag" style="color:var(--devops)">AWS/GCP</span>
+          <span class="tool-tag" style="color:var(--devops)">Terraform</span>
+          <span class="tool-tag" style="color:var(--devops)">GitHub Actions</span>
+          <span class="tool-tag">Linux</span>
+          <span class="tool-tag">Bash</span>
+          <span class="tool-tag">Prometheus</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="cb-top"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<span class="code-cm"># GitHub Actions — avtomatik deploy</span><br>
+<span class="code-kw">on</span>: [<span class="code-str">push</span>]<br>
+<span class="code-kw">jobs</span>:<br>
+&nbsp;&nbsp;<span class="code-fn">deploy</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-kw">steps</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="code-fn">docker build</span> -t <span class="code-str">myapp:latest</span> .<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="code-fn">kubectl apply</span> -f <span class="code-str">deployment.yaml</span>
+      </div>
+    </div>
+    <div class="track-right">
+      <div class="day-example">
+        <h4>⏰ DevOps muhandis — kundalik ish</h4>
+        <ul class="task-list">
+          <li><span class="ti">09:00</span><span class="tc">Kecha tunda bo'lgan ogohlantirishlarni ko'rib chiqish (Grafana)</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">monitor</span></li>
+          <li><span class="ti">09:30</span><span class="tc">Yangi mikroservis uchun Docker image yaratish</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">docker</span></li>
+          <li><span class="ti">11:00</span><span class="tc">CI/CD pipeline — test muvaffaqiyatsiz bo'ldi, sababini aniqlash</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">debug</span></li>
+          <li><span class="ti">12:30</span><span class="tc">Terraform — yangi AWS S3 bucket va IAM role qo'shish</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">IaC</span></li>
+          <li><span class="ti">14:00</span><span class="tc">Kubernetes pod'lar xotirasini optimallashtirish</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">k8s</span></li>
+          <li><span class="ti">15:30</span><span class="tc">Log tizimini kengaytirish — ELK stack yangi index</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">logs</span></li>
+          <li><span class="ti">16:30</span><span class="tc">Ishlab chiquvchilar bilan: staging muhitida yangi versiya</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">deploy</span></li>
+          <li><span class="ti">17:30</span><span class="tc">Hujjat yangilash — runbook qo'shish yangi servis uchun</span><span class="tag" style="background:rgba(251,146,60,0.1);color:var(--devops)">docs</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Sertifikatlar muhim</div>
+          <div style="font-family:var(--display);font-size:1.1rem;font-weight:700;color:var(--devops)">AWS / CKA</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Maoshni 30–50% oshiradi</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Junior vaqti</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--devops)">16–22 oy</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Linux + Cloud tajriba kerak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 5 — CYBERSECURITY
+     ============================================================ -->
+<div class="slide" id="s5">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag" style="color:var(--cyber)">05 — Cybersecurity</div>
+  <div class="track-hero">
+    <div class="track-left">
+      <h2 style="color:var(--cyber)">🔐 Cybersecurity<br>Specialist</h2>
+      <p class="tdesc">Tizimlar va tarmoqlardagi zaifliklarni topish va himoya qilish. Penetration testing, ethical hacking, incident response — analitik fikrlovchilar uchun juda qiziqarli soha.</p>
+      <div class="track-salary" style="color:var(--cyber);background:rgba(244,114,182,0.08);border:1px solid rgba(244,114,182,0.2);">Junior: $700–1100 / Middle: $1500–2500 / Senior: $4000+</div>
+      <div style="margin-bottom:0.75rem;">
+        <div class="track-tools">
+          <span class="tool-tag" style="color:var(--cyber)">Kali Linux</span>
+          <span class="tool-tag" style="color:var(--cyber)">Nmap</span>
+          <span class="tool-tag" style="color:var(--cyber)">Metasploit</span>
+          <span class="tool-tag" style="color:var(--cyber)">Burp Suite</span>
+          <span class="tool-tag" style="color:var(--cyber)">Wireshark</span>
+          <span class="tool-tag">Python</span>
+          <span class="tool-tag">OWASP Top 10</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="cb-top"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<span class="code-cm"># Tarmoq skanerlash (etik xakerlash)</span><br>
+<span class="code-fn">nmap</span> -<span class="code-var">sV</span> -<span class="code-var">sC</span> -<span class="code-num">p</span> <span class="code-str">1-65535</span> target.com<br>
+<span class="code-cm"># OWASP ZAP — veb zaiflik tekshiruvi</span><br>
+<span class="code-fn">zap-cli</span> quick-scan --self-contained<br>
+&nbsp;&nbsp;&nbsp;&nbsp;--start-options <span class="code-str">"-config api.key=12345"</span>
+      </div>
+    </div>
+    <div class="track-right">
+      <div class="day-example">
+        <h4>⏰ Cybersecurity mutaxassis — kundalik ish</h4>
+        <ul class="task-list">
+          <li><span class="ti">09:00</span><span class="tc">SOC dashboard — kecha ogohlantirimlirini tahlil qilish</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">monitor</span></li>
+          <li><span class="ti">09:30</span><span class="tc">Yangi veb ilova — Black-box pentest boshlash</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">pentest</span></li>
+          <li><span class="ti">11:00</span><span class="tc">SQL Injection zaifligini topish va hujjatlashtirish</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">vuln</span></li>
+          <li><span class="ti">12:00</span><span class="tc">CTF musobaqa — HackTheBox yangi mashina</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">CTF</span></li>
+          <li><span class="ti">14:00</span><span class="tc">Pentest hisoboti yozish — topilgan zaifliklar va tavsiyalar</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">report</span></li>
+          <li><span class="ti">15:30</span><span class="tc">Ishlab chiquvchilar bilan: topilgan zaifliklarni tuzatish</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">patch</span></li>
+          <li><span class="ti">16:30</span><span class="tc">Bug bounty — yangi dastur topib, tarmoq skanerlash</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">bounty</span></li>
+          <li><span class="ti">17:30</span><span class="tc">Yangi CVE (zaiflik) haqida o'qib, xavf baholash</span><span class="tag" style="background:rgba(244,114,182,0.1);color:var(--cyber)">research</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">O'rganish platformasi</div>
+          <div style="font-family:var(--display);font-size:1rem;font-weight:700;color:var(--cyber)">TryHackMe<br>HackTheBox</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Bepul boshlash mumkin</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Ingliz tili</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--cyber)">Majburiy</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Barcha resurslar inglizcha</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 6 — AI/ML
+     ============================================================ -->
+<div class="slide" id="s6">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag" style="color:var(--ai)">06 — AI/ML Engineer</div>
+  <div class="track-hero">
+    <div class="track-left">
+      <h2 style="color:var(--ai)">🤖 AI/ML<br>Engineer</h2>
+      <p class="tdesc">Sun'iy intellekt va mashina o'rganish modellari yaratadi. ChatGPT kabi tizimlar ortida aynan shu mutaxassislar turibdi. Eng tez o'sayotgan va eng yaxshi maosh to'laydigan soha.</p>
+      <div class="track-salary" style="color:var(--ai);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);">Junior: $1000–1500 / Middle: $2000–4000 / Senior: $6000+</div>
+      <div style="margin-bottom:0.75rem;">
+        <div class="track-tools">
+          <span class="tool-tag" style="color:var(--ai)">Python</span>
+          <span class="tool-tag" style="color:var(--ai)">PyTorch</span>
+          <span class="tool-tag" style="color:var(--ai)">TensorFlow</span>
+          <span class="tool-tag" style="color:var(--ai)">Scikit-learn</span>
+          <span class="tool-tag" style="color:var(--ai)">HuggingFace</span>
+          <span class="tool-tag">Pandas</span>
+          <span class="tool-tag">NumPy</span>
+          <span class="tool-tag">Kaggle</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="cb-top"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<span class="code-cm"># ML model o'rgatish misoli</span><br>
+<span class="code-kw">from</span> sklearn.ensemble <span class="code-kw">import</span> <span class="code-fn">RandomForest</span><br>
+<span class="code-var">model</span> = <span class="code-fn">RandomForestClassifier</span>()<br>
+<span class="code-var">model</span>.<span class="code-fn">fit</span>(<span class="code-var">X_train</span>, <span class="code-var">y_train</span>)<br>
+<span class="code-var">accuracy</span> = <span class="code-var">model</span>.<span class="code-fn">score</span>(<span class="code-var">X_test</span>, <span class="code-var">y_test</span>)<br>
+<span class="code-fn">print</span>(<span class="code-str">f"Aniqlik: {accuracy:.2%}"</span>)
+      </div>
+    </div>
+    <div class="track-right">
+      <div class="day-example">
+        <h4>⏰ AI/ML muhandis — kundalik ish</h4>
+        <ul class="task-list">
+          <li><span class="ti">09:00</span><span class="tc">Kecha kechalari o'rgatilgan model natijasini ko'rish</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">eval</span></li>
+          <li><span class="ti">09:30</span><span class="tc">Ma'lumotlarni tozalash — null qiymatlar, anomaliyalar</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">data</span></li>
+          <li><span class="ti">11:00</span><span class="tc">Feature engineering — yangi xususiyat qo'shib, aniqlikni oshirish</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">feat</span></li>
+          <li><span class="ti">12:00</span><span class="tc">Research paper o'qish — yangi arxiv maqolasi</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">research</span></li>
+          <li><span class="ti">14:00</span><span class="tc">Hyperparameter tuning — Optuna bilan avtomatik</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">tune</span></li>
+          <li><span class="ti">15:30</span><span class="tc">Model API sifatida deploy qilish — FastAPI wrapper</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">deploy</span></li>
+          <li><span class="ti">16:30</span><span class="tc">Kaggle musobaqasi — submission yuborish</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">kaggle</span></li>
+          <li><span class="ti">17:30</span><span class="tc">MLflow — eksperiment natijalrini saqlash va solishtirish</span><span class="tag" style="background:rgba(52,211,153,0.1);color:var(--ai)">mlops</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Matematika zarurmi?</div>
+          <div style="font-family:var(--display);font-size:1.2rem;font-weight:700;color:var(--ai)">Ha, lekin...</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Asosiy statistika + lineal algebra yetarli boshida</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">O'zbekistonda holat</div>
+          <div style="font-family:var(--display);font-size:1.2rem;font-weight:700;color:var(--ai)">O'sayotgan</div>
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">Remote ishlash — asosiy imkoniyat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 7 — YO'L XARITASI (UMUMIY)
+     ============================================================ -->
+<div class="slide" id="s7">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">07 — Yo'l xaritasi</div>
+  <h2 style="font-family:var(--display);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;margin-bottom:1.5rem;letter-spacing:-0.02em;">Junior darajagacha — umumiy bosqichlar</h2>
+  <div class="path-grid">
+    <div class="path-step" style="border-color:rgba(0,240,255,0.15)">
+      <div class="path-step::after" style="background:var(--c)"></div>
+      <div class="ps-num">1</div>
+      <div class="ps-phase">Bosqich 1</div>
+      <h3>Asoslar</h3>
+      <span class="ps-dur" style="color:var(--c);background:rgba(0,240,255,0.08)">0–3 oy</span>
+      <ul>
+        <li>Dasturlash tilini tanlash</li>
+        <li>Asosiy sintaksis va mantiq</li>
+        <li>Git/GitHub — versiya boshqaruvi</li>
+        <li>Linux buyruqlari asoslari</li>
+        <li>Ingliz tili — B1 darajaga etkazish</li>
+        <li>Har kuni 3–4 soat o'qish</li>
+      </ul>
+    </div>
+    <div class="path-step" style="border-color:rgba(139,92,246,0.15)">
+      <div class="ps-num">2</div>
+      <div class="ps-phase">Bosqich 2</div>
+      <h3>Ixtisoslik</h3>
+      <span class="ps-dur" style="color:var(--c2);background:rgba(139,92,246,0.08)">3–9 oy</span>
+      <ul>
+        <li>Tanlangan yo'nalish (Frontend/Backend...)</li>
+        <li>Asosiy framework o'rganish</li>
+        <li>Ma'lumotlar bazasi asoslari</li>
+        <li>Birinchi shaxsiy loyiha</li>
+        <li>Stack Overflow / GitHub faol foydalanish</li>
+        <li>Ingliz tili — B2 ga etkazish</li>
+      </ul>
+    </div>
+    <div class="path-step" style="border-color:rgba(251,146,60,0.15)">
+      <div class="ps-num">3</div>
+      <div class="ps-phase">Bosqich 3</div>
+      <h3>Portfolio</h3>
+      <span class="ps-dur" style="color:var(--devops);background:rgba(251,146,60,0.08)">9–16 oy</span>
+      <ul>
+        <li>3–5 ta real loyiha (GitHub'da)</li>
+        <li>Leetcode Easy/Medium masalalar</li>
+        <li>Freelance yoki internship boshlaш</li>
+        <li>LinkedIn profili to'ldirish</li>
+        <li>IT hamjamiyatda faol bo'lish</li>
+        <li>Mentor izlash va topish</li>
+      </ul>
+    </div>
+    <div class="path-step" style="border-color:rgba(52,211,153,0.15)">
+      <div class="ps-num">4</div>
+      <div class="ps-phase">Bosqich 4</div>
+      <h3>Ish qidirish</h3>
+      <span class="ps-dur" style="color:var(--ai);background:rgba(52,211,153,0.08)">16–20+ oy</span>
+      <ul>
+        <li>CV va portfolio sayti tayyorlash</li>
+        <li>Texnik intervyuga tayyorlanish</li>
+        <li>Har hafta 5–10 ta ariza yuborish</li>
+        <li>Rad javobidan qo'rqmaslik</li>
+        <li>Mock intervyu — hamdo'stlar bilan</li>
+        <li>Birinchi ish — maosh emas tajriba</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sal-bars" style="max-width:1100px;margin-top:1.5rem;">
+    <div style="font-family:var(--mono);font-size:0.6rem;color:var(--dim);margin-bottom:0.75rem;letter-spacing:0.1em;">MARTABA O'SISHI ($/OY)</div>
+    <div class="sal-row"><span class="sal-lv">Intern</span><div class="bar-t"><div class="bar-f" style="width:10%;background:linear-gradient(90deg,#444,#666)"></div></div><span class="sal-am">$150–300</span></div>
+    <div class="sal-row"><span class="sal-lv">Junior</span><div class="bar-t"><div class="bar-f" style="width:25%;background:linear-gradient(90deg,var(--frontend),var(--backend))"></div></div><span class="sal-am">$500–1000</span></div>
+    <div class="sal-row"><span class="sal-lv">Middle</span><div class="bar-t"><div class="bar-f" style="width:55%;background:linear-gradient(90deg,var(--backend),var(--devops))"></div></div><span class="sal-am">$1200–2500</span></div>
+    <div class="sal-row"><span class="sal-lv">Senior</span><div class="bar-t"><div class="bar-f" style="width:80%;background:linear-gradient(90deg,var(--devops),var(--ai))"></div></div><span class="sal-am">$2500–5000</span></div>
+    <div class="sal-row"><span class="sal-lv">Lead</span><div class="bar-t"><div class="bar-f" style="width:100%;background:linear-gradient(90deg,var(--ai),var(--c))"></div></div><span class="sal-am">$5000–10000+</span></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 8 — SOFT SKILLS
+     ============================================================ -->
+<div class="slide" id="s8">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">08 — Soft Skills</div>
+  <h2 style="font-family:var(--display);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;margin-bottom:0.4rem;letter-spacing:-0.02em;">Texnik emas, lekin hal qiluvchi ko'nikmalar</h2>
+  <p style="font-size:0.78rem;color:var(--dim);margin-bottom:1.2rem;">Tadqiqotlar: muvaffaqiyatning 75% soft skills, 25% texnik bilim</p>
+  <div class="soft-grid">
+    <div class="sc" style="--sc-c:var(--c)"><div class="sc::before" style="background:var(--c)"></div>
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--c)"></div>
+      <div class="si">🗣️</div>
+      <h3>Kommunikatsiya</h3>
+      <p>Texnik g'oyani oddiy tilda tushuntirish. Mijoz va jamoa bilan muloqot.</p>
+      <div class="ex">Misol: Backend xatosi bo'lganda mijozga:<br>"Server bilan muammo, 30 daqiqa ichida tuzatamiz" — aniq va qisqa.</div>
+    </div>
+    <div class="sc">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--c2)"></div>
+      <div class="si">🧩</div>
+      <h3>Muammo yechish</h3>
+      <p>Xatolarni tizimli ravishda aniqlash. Bug silkitish emas — metodikali debug.</p>
+      <div class="ex">Misol: Konsol → Network tab → API response → Ma'lumotlar bazasi — izchil tekshirish.</div>
+    </div>
+    <div class="sc">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--c3)"></div>
+      <div class="si">📚</div>
+      <h3>O'rganishga ishtiyoq</h3>
+      <p>IT har 2–3 yilda o'zgaradi. Bir joyda to'xtab qolish — orqada qolish.</p>
+      <div class="ex">Misol: React har versiyada o'zgaradi. Junior ham Senior ham doim o'rganadi.</div>
+    </div>
+    <div class="sc">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--devops)"></div>
+      <div class="si">⏱️</div>
+      <h3>Vaqt boshqarish</h3>
+      <p>Deadline va undan ortiq. "Ready tomorrow" deb aytib, 3 kunda berish — katta muammo.</p>
+      <div class="ex">Misol: "1 kunlik" vazifani 3 qismga bo'l, har birini aniq baholash. Pessimist bo'l.</div>
+    </div>
+    <div class="sc">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyber)"></div>
+      <div class="si">🤝</div>
+      <h3>Jamoaviy ishlash</h3>
+      <p>Code review berish va qabul qilish. Tanqidni shaxsiy olmaslik — bu kod haqida, siz haqida emas.</p>
+      <div class="ex">Misol: "Bu funksiya juda uzun, 2 ta qilaylik" — yaxshi review. Shaxsiy hujum emas.</div>
+    </div>
+    <div class="sc">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--ai)"></div>
+      <div class="si">🇬🇧</div>
+      <h3>Ingliz tili — O'zbek uchun maxsus</h3>
+      <p>O'zbekistonda yaxshi maosh uchun B2+ daraja zarur. Bu eng tez qaytim beradigan investitsiya.</p>
+      <div class="ex">Misol: B2 ingliz tili bilan maosh 2x bo'lishi mumkin — autsorsing komganiyalar uchun.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 9 — TAHLIL (QUIZ)
+     ============================================================ -->
+<div class="slide" id="s9">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">09 — O'zingizni tahlil eting</div>
+  <h2 style="font-family:var(--display);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;margin-bottom:0.4rem;letter-spacing:-0.02em;">Qaysi yo'nalish sizga mos?</h2>
+  <p style="font-size:0.78rem;color:var(--dim);margin-bottom:1.5rem;">Savollarga halol javob bering — natija sizga eng mos sohani ko'rsatadi</p>
+  <div class="quiz-wrap">
+    <div class="qcard">
+      <div class="qprog" id="qProg">
+        <div class="pd done"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="pd"></div>
+      </div>
+      <div id="qBody">
+        <div class="qnum" id="qN"></div>
+        <div class="qtext" id="qT"></div>
+        <div class="qopts" id="qO"></div>
+        <div class="qnav">
+          <button class="qbtn" id="qPrev" onclick="qPrev()" style="display:none">← Ortga</button>
+          <button class="qbtn p" id="qNext" onclick="qNext()">Keyingi →</button>
+        </div>
+      </div>
+      <div class="qres" id="qRes">
+        <div class="ri" id="rIcon"></div>
+        <div class="rt" id="rType"></div>
+        <div class="rd" id="rDesc"></div>
+        <div class="rtags" id="rTags"></div>
+        <button class="qbtn" onclick="qReset()" style="margin-top:1.2rem">↺ Qaytadan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 10 — TAYYOR?
+     ============================================================ -->
+<div class="slide" id="s10">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">10 — Haqiqat testi</div>
+  <h2 style="font-family:var(--display);font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;margin-bottom:0.4rem;letter-spacing:-0.02em;">Dasturchi bo'lishga rostdan tayyormisiz?</h2>
+  <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1.2rem;">Halol javob bering — "nomi ulug', surpasi quruq" bo'lmaslik uchun</p>
+  <div class="tayyor-grid">
+    <div class="tg bad">
+      <div class="tg-title">⚠️ Xavf belgilari</div>
+      <div class="tgi"><span>🚩</span><span>"3 oyda $2000 ishlayman" rejalari bor</span></div>
+      <div class="tgi"><span>🚩</span><span>Birinchi qiyinchilikda kurs yoki yo'nalish almashtirasiz</span></div>
+      <div class="tgi"><span>🚩</span><span>Ingliz tili bilan ishlashdan qochasiz</span></div>
+      <div class="tgi"><span>🚩</span><span>Kuniga 1 soatdan kam ajratasiz o'rganishga</span></div>
+      <div class="tgi"><span>🚩</span><span>Sertifikat to'playsiz, loyiha yaratmaysiz</span></div>
+      <div class="tgi"><span>🚩</span><span>Xatoga "men uchun bu emas" deb javob berasiz</span></div>
+    </div>
+    <div class="tg good">
+      <div class="tg-title">✅ Tayyorlik belgilari</div>
+      <div class="tgi"><span>✅</span><span>Xato topganda quvonasiz — "tuzataman" deb o'ylaysiz</span></div>
+      <div class="tgi"><span>✅</span><span>Kuniga 3–5 soat o'rganishga vaqt ajratasiz</span></div>
+      <div class="tgi"><span>✅</span><span>Ingliz tilida hujjat o'qishdan qochmaysiz</span></div>
+      <div class="tgi"><span>✅</span><span>Biror narsa tushunmasa, avval o'zingiz fikrlab ko'rasiz</span></div>
+      <div class="tgi"><span>✅</span><span>"Yomon" bo'lsa ham birinchi loyihani GitHub'ga qo'yasiz</span></div>
+      <div class="tgi"><span>✅</span><span>18–24 oy maoshsiz o'rganishga tayyorsiz</span></div>
+    </div>
+  </div>
+  <div class="mstats">
+    <div class="ms"><div class="mn" style="color:var(--c)">40K+</div><div class="ml">O'zbekistondagi IT mutaxassislar (2025)</div></div>
+    <div class="ms"><div class="mn" style="color:var(--c2)">15K+</div><div class="ml">Har yili yangi IT mutaxassis talab</div></div>
+    <div class="ms"><div class="mn" style="color:var(--c3)">70%</div><div class="ml">O'quvchilar 1-yilda to'xtab ketadi</div></div>
+    <div class="ms"><div class="mn" style="color:var(--ai)">3×</div><div class="ml">Remote ish local maoshdan farqi</div></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 11 — YAKUN
+     ============================================================ -->
+<div class="slide" id="s_end">
+  <div class="slide-logo">DASTURCHI.UZ — 2025</div>
+  <div class="stag">11 — Xulosa</div>
+  <p class="end-big">Yo'l uzoq.<br><span style="background:linear-gradient(120deg,var(--c),var(--ai));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Lekin aniq.</span></p>
+  <p class="end-sub">Dasturchi bo'lish qiyin, lekin imkonsiz emas. To'g'ri yo'nalish + to'g'ri kutish + to'g'ri sabr = muvaffaqiyat. O'zbekiston IT bozori o'sish bosqichida — kech emas.</p>
+  <div class="end-grid">
+    <div class="eg"><div class="en" style="color:var(--c)">12–24</div><div class="el">oy sabr — Junior bo'lish uchun real vaqt</div></div>
+    <div class="eg"><div class="en" style="color:var(--ai)">$800+</div><div class="el">Junior maosh — Toshkent, O'zbek bozori</div></div>
+    <div class="eg"><div class="en" style="color:var(--c2)">5 ta</div><div class="el">portfolio loyiha — diplom o'rnini bosadi</div></div>
+  </div>
+  <div style="margin-top:2rem;font-family:var(--mono);font-size:0.65rem;color:var(--muted);text-align:center;letter-spacing:0.1em;">
+    ← klavish bilan orqaga | ▶ bilan oldinga
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nav-btn" id="btnPrev" onclick="go(-1)">←</button>
+  <div id="dots"></div>
+  <div id="slideNum">1 / 12</div>
+  <button class="nav-btn" id="btnNext" onclick="go(1)">→</button>
+</div>
+
+<div id="tapLeft" onclick="go(-1)"></div>
+<div id="tapRight" onclick="go(1)"></div>
+
+<script>
+// ===== SLIDE ENGINE =====
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+
+function renderSlides(dir) {
+  slides.forEach((s, i) => {
+    s.classList.remove('active','prev');
+    if (i === cur) s.classList.add('active');
+    else if (i < cur) s.classList.add('prev');
+  });
+  // Progress
+  document.getElementById('progressFill').style.width = ((cur/(total-1))*100) + '%';
+  // Dots
+  const dc = document.getElementById('dots');
+  dc.innerHTML = '';
+  slides.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===cur?' active':'');
+    d.onclick = () => { cur=i; renderSlides(); };
+    dc.appendChild(d);
+  });
+  document.getElementById('slideNum').textContent = (cur+1) + ' / ' + total;
+  document.getElementById('btnPrev').disabled = cur === 0;
+  document.getElementById('btnNext').disabled = cur === total-1;
+}
+
+function go(dir) {
+  const next = cur + dir;
+  if (next < 0 || next >= total) return;
+  cur = next;
+  renderSlides();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = tx - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 50) go(dx > 0 ? 1 : -1);
+}, {passive:true});
+
+renderSlides();
+
+// ===== QUIZ =====
+const qs = [
+  { q:"Yangi texnologiya o'rganishda qanday yondashасiz?", opts:[
+    {t:"YouTube video ko'rib, vizual tushunaman", s:{frontend:3,ai:1}},
+    {t:"Hujjat va kitobdan chuqur o'qiyman", s:{backend:3,cyber:2,ai:2}},
+    {t:"Amaliyot qilib, sinab ko'raman", s:{devops:3,frontend:2}},
+    {t:"Muammo bo'lganda zarur narsani o'rganaman", s:{backend:2,devops:2}}
+  ]},
+  { q:"Qaysi faoliyat sizga ko'proq qiziqarli?", opts:[
+    {t:"Chiroyli interfeys va dizayn yaratish", s:{frontend:4}},
+    {t:"Ma'lumotlar va tizimlar bilan ishlash", s:{backend:4,ai:1}},
+    {t:"Serverlar barqarorligini ta'minlash", s:{devops:4}},
+    {t:"Tizim zaifliklarini topish va himoya", s:{cyber:4}}
+  ]},
+  { q:"Matematikaga munosabatingiz?", opts:[
+    {t:"Yaxshi ko'raman, qiziqaman", s:{ai:4,backend:1}},
+    {t:"O'rtacha — kerak bo'lsa o'rganaman", s:{backend:2,devops:2,frontend:2}},
+    {t:"Unchalik emas, lekin mantiqqa kuchliman", s:{cyber:3,devops:2}},
+    {t:"Matematik emas, vizual fikrlayman", s:{frontend:4}}
+  ]},
+  { q:"Sabr va chidam nuqtai nazaridan:", opts:[
+    {t:"Bir muammoni soatlab o'tiraman", s:{cyber:3,ai:3,backend:2}},
+    {t:"Natija ko'rsam, davom etaman", s:{frontend:3,devops:2}},
+    {t:"Tez natija kerak", s:{frontend:2}},
+    {t:"Muammo yechish menga kuch beradi", s:{cyber:4,backend:3}}
+  ]},
+  { q:"Kelajak maqsadingiz?", opts:[
+    {t:"Remote ishlash, xorijiy kompaniya", s:{backend:3,devops:3,ai:3}},
+    {t:"O'z startapimni qurish", s:{frontend:3,backend:3}},
+    {t:"Davlat/bank IT xavfsizligida ishlash", s:{cyber:4}},
+    {t:"Tadqiqot va ilm bilan shug'ullanish", s:{ai:4}}
+  ]}
+];
+let qc=0, qsel=new Array(5).fill(null);
+
+function qRender(){
+  document.getElementById('qN').textContent=`Savol ${qc+1} / ${qs.length}`;
+  document.getElementById('qT').textContent=qs[qc].q;
+  document.getElementById('qPrev').style.display=qc>0?'block':'none';
+  document.getElementById('qNext').textContent=qc===qs.length-1?'Natijani ko\'rish ✓':'Keyingi →';
+  const o=document.getElementById('qO'); o.innerHTML='';
+  qs[qc].opts.forEach((opt,i)=>{
+    const d=document.createElement('div');
+    d.className='qopt'+(qsel[qc]===i?' sel':'');
+    d.innerHTML=`<span class="qoptkey">${String.fromCharCode(65+i)}</span>${opt.t}`;
+    d.onclick=()=>{
+      document.querySelectorAll('.qopt').forEach(el=>el.classList.remove('sel'));
+      d.classList.add('sel'); qsel[qc]=i;
+    };
+    o.appendChild(d);
+  });
+  const dots=document.querySelectorAll('.pd');
+  dots.forEach((d,i)=>d.classList.toggle('done',i<=qc));
+}
+
+function qNext(){
+  if(qsel[qc]===null){
+    const o=document.getElementById('qO');
+    o.style.opacity='0.4'; setTimeout(()=>o.style.opacity='1',400); return;
+  }
+  if(qc<qs.length-1){qc++;qRender();}
+  else{
+    const sc={frontend:0,backend:0,devops:0,cyber:0,ai:0};
+    qsel.forEach((sel,qi)=>{
+      if(sel!==null){const s=qs[qi].opts[sel].s;Object.keys(s).forEach(k=>sc[k]=(sc[k]||0)+s[k]);}
+    });
+    const sorted=Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+    const top=sorted[0][0];
+    const res={
+      frontend:{icon:'🎨',type:'Frontend Developer',desc:'Vizual fikrlovchi, foydalanuvchi tajribasiga e\'tiborli. HTML/CSS/JS/React yo\'li sizga mos. Yaratuvchi va ijodiy fikrlovchilar uchun ideal tanlov.'},
+      backend:{icon:'⚙️',type:'Backend Developer',desc:'Tizimli fikrlovchi, ma\'lumotlar va mantiq bilan ishlashni yaxshi ko\'rasiz. Python/Django yoki Java/Spring — bu sizning dunyoyingiz.'},
+      devops:{icon:'🚀',type:'DevOps Engineer',desc:'Tizimlarni avtomatlashtirish va barqarorlikka e\'tiborli insofsiz. Linux, Docker, Kubernetes va cloud — bu sizning sayohatingiz.'},
+      cyber:{icon:'🔐',type:'Cybersecurity Specialist',desc:'Analitik fikrlovchi, sabr-toqatli. Ethical hacking, penetration testing — sirni topish sizga quvonch beradi.'},
+      ai:{icon:'🤖',type:'AI/ML Engineer',desc:'Ilmiy fikrlovchi, statistika va ma\'lumotlar bilan ishlashni yaxshi ko\'rasiz. Python, ML modellari, chuqur o\'rganish — bu sizning yo\'lingiz.'}
+    };
+    const r=res[top];
+    document.getElementById('qBody').style.display='none';
+    const qr=document.getElementById('qRes'); qr.style.display='block';
+    document.getElementById('rIcon').textContent=r.icon;
+    document.getElementById('rType').textContent=r.type;
+    document.getElementById('rDesc').textContent=r.desc;
+    const tc={frontend:'var(--frontend)',backend:'var(--backend)',devops:'var(--devops)',cyber:'var(--cyber)',ai:'var(--ai)'};
+    const tn={frontend:'Frontend',backend:'Backend',devops:'DevOps',cyber:'Cyber',ai:'AI/ML'};
+    document.getElementById('rTags').innerHTML=sorted.slice(0,3).map(([k])=>`<span class="rtag" style="color:${tc[k]};border-color:${tc[k]}">${tn[k]}</span>`).join('');
+  }
+}
+function qPrev(){if(qc>0){qc--;qRender();}}
+function qReset(){qc=0;qsel=new Array(5).fill(null);document.getElementById('qBody').style.display='block';document.getElementById('qRes').style.display='none';qRender();}
+qRender();
+</script>
+
+</body>
+</html>
